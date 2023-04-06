@@ -64,10 +64,11 @@ class App(QMainWindow):
         self.image_list.clear()
         for image_path in image_paths:
             pixmap = QPixmap(image_path)
-            tthumbnail = pixmap.scaled(100, 100, Qt.KeepAspectRatio, Qt.FastTransformation)
+            thumbnail = pixmap.scaled(100, 100, Qt.KeepAspectRatio, Qt.FastTransformation)
             icon = QIcon(thumbnail)
             item = QListWidgetItem(icon, os.path.basename(image_path))
             self.image_list.addItem(item)
+
 
     def filter_images(self):
         if self.filter_options.currentText() == "All":
