@@ -13,3 +13,11 @@
 根据文件类型筛选图片
 批量选择和删除图片
 跨平台支持：Windows, macOS 和 Linux
+
+📖 Usage
+
+点击“Open Folder”按钮，选择包含图片的文件夹。
+使用鼠标或键盘方向键浏览图片缩略图。
+使用筛选下拉菜单根据文件类型筛选图片。
+使用鼠标或键盘Shift/Ctrl (Cmd on macOS)键选择多个图片。
+点击“Delete Selected Images”按钮删除所选图片。
