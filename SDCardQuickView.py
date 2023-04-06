@@ -12,8 +12,9 @@ class App(QMainWindow):
 
         self.setWindowTitle("Image Viewer")
         self.setGeometry(100, 100, 800, 600)
-        self.progress_bar = QProgressBar()
-        layout.addWidget(self.progress_bar)
+        self.image_paths = []
+
+        
 
         main_widget = QWidget()
         self.setCentralWidget(main_widget)
@@ -51,6 +52,9 @@ class App(QMainWindow):
         delete_button = QPushButton("Delete Selected Images")
         buttons_layout.addWidget(delete_button)
         delete_button.clicked.connect(self.delete_images)
+        
+        self.progress_bar = QProgressBar()
+        buttons_layout.addWidget(self.progress_bar)
 
         filter_layout = QGridLayout()
         buttons_layout.addLayout(filter_layout)
