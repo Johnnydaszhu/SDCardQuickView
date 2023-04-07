@@ -1,11 +1,15 @@
 import sys
 import os
 import glob
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QListWidget, QPushButton, QVBoxLayout, QWidget, QLabel, QGridLayout, QComboBox, QListWidgetItem, QSplitter, QTreeView, QFileSystemModel, QProgressBar, QGraphicsOpacityEffect
+import datetime
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QListWidget, QPushButton, QVBoxLayout, QWidget, QLabel, QGridLayout, QComboBox, QSplitter, QTreeView, QFileSystemModel, QSizePolicy, QDateEdit
 from PyQt5.QtGui import QPixmap, QIcon, QImageReader
-from PyQt5.QtCore import Qt, QSize, QDir, QUrl, QMimeData, QModelIndex
+from PyQt5.QtCore import Qt, QSize, QDir, QUrl, QMimeData, QModelIndex, QThread, pyqtSignal
 from functools import lru_cache
-from PyQt5.QtCore import QThread, pyqtSignal
+from PIL import Image
+from PIL.ExifTags import TAGS
+from PyQt5.QtWidgets import QListWidgetItem
+
 import concurrent.futures
 
 
@@ -20,10 +24,9 @@ class ImageLoader(QThread):
         for image_path in self.image_paths:
             pixmap = QPixmap(image_path)
             self.image_loaded.emit(image_path, pixmap)
-    
+
     def stop(self):
         self.terminate()
-
 
 
 class App(QMainWindow):
@@ -42,6 +45,17 @@ class App(QMainWindow):
         splitter = QSplitter(Qt.Horizontal)
         layout.addWidget(splitter)
 
+        self.image_list = QListWidget()
+        self.image_list.setViewMode(QListWidget.IconMode)
+        self.image_list.setIconSize(QSize(100, 100))
+        self.image_list.setResizeMode(QListWidget.Adjust)
+        self.image_list.setSpacing(10)
+        self.image_list.setSelectionMode(QListWidget.ExtendedSelection)
+        splitter.addWidget(self.image_list)
+
+        self.image_list.itemClicked.connect(self.show_exif_info)
+        self.image_list.itemDoubleClicked.connect(self.open_image)
+
         self.tree_view = QTreeView()
         self.tree_view.setAcceptDrops(True)
         self.tree_view.viewport().setAcceptDrops(True)
@@ -53,23 +67,20 @@ class App(QMainWindow):
         self.tree_view.setDragDropMode(QTreeView.DropOnly)
         self.tree_view.dragEnterEvent = self.dragEnterEvent
         self.tree_view.dropEvent = self.dropEvent
-       
+        splitter.addWidget(self.tree_view)
+
+        self.image_preview = QLabel()
+        self.image_preview.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.image_preview.setAlignment(Qt.AlignCenter)
+        splitter.addWidget(self.image_preview)
 
         self.file_system_model = QFileSystemModel()
         self.tree_view.setModel(self.file_system_model)
-        
-        self.image_paths = []
 
+        self.image_paths = []
 
         self.tree_view.setRootIndex(self.file_system_model.index(""))
         splitter.addWidget(self.tree_view)
-
-        self.image_list = QListWidget()
-        self.image_list.setViewMode(QListWidget.IconMode)
-        self.image_list.setIconSize(QSize(100, 100))
-        self.image_list.setResizeMode(QListWidget.Adjust)
-        self.image_list.setSpacing(10)
-        splitter.addWidget(self.image_list)
 
         buttons_layout = QVBoxLayout()
         layout.addLayout(buttons_layout)
@@ -95,8 +106,6 @@ class App(QMainWindow):
 
         filter_layout.addWidget(QLabel("Filter:"), 0, 0)
 
-        filter_layout.addWidget(QLabel("Filter:"), 0, 0)
-
         self.filter_options = QComboBox()
         filter_layout.addWidget(self.filter_options, 0, 1)
 
@@ -107,16 +116,83 @@ class App(QMainWindow):
 
         self.filter_options.currentTextChanged.connect(self.filter_images)
 
-        self.progress_bar = QProgressBar()
-        buttons_layout.addWidget(self.progress_bar)
-        
         self.tree_view.clicked.connect(self.tree_item_clicked)
-        
+
+        filter_date_layout = QGridLayout()
+        buttons_layout.addLayout(filter_date_layout)
+
+       
+        filter_date_layout.addWidget(QLabel("Filter Date:"), 0, 0)
+
+        self.date_edit = QDateEdit()
+        filter_date_layout.addWidget(self.date_edit, 0, 1)
+        self.date_edit.setCalendarPopup(True)
+        self.date_edit.setDateRange(datetime.date.min, datetime.date.today())
+        self.date_edit.setDate(datetime.date.today())
+        self.date_edit.setDisplayFormat("yyyy-MM-dd")
+        self.date_edit.dateChanged.connect(self.filter_date)
+
+        today_button = QPushButton("Today")
+        buttons_layout.addWidget(today_button)
+        today_button.clicked.connect(self.filter_today)
+
+        this_week_button = QPushButton("This Week")
+        buttons_layout.addWidget(this_week_button)
+        this_week_button.clicked.connect(self.filter_this_week)
+
+
+    def open_image(self, item):
+        image_path = os.path.join(self.current_folder, item.text())
+        pixmap = QPixmap(image_path)
+        self.image_preview.setPixmap(pixmap.scaled(self.image_preview.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
 
     def add_thumbnail_to_list(self, image_path, pixmap):
         item = QListWidgetItem(QIcon(pixmap), os.path.basename(image_path))
         self.image_list.addItem(item)
 
+    def show_exif_info(self, item):
+        image_path = os.path.join(self.current_folder, item.text())
+        exif_data = self.get_exif_data(image_path)
+        if exif_data:
+            exif_info = "\n".join(f"{key}: {value}" for key, value in exif_data.items())
+            print(exif_info)  # Print EXIF data to the console, you can change this to display it somewhere else if you prefer
+        else:
+            print("No EXIF data found")
+
+    def get_exif_data(self, image_path):
+        try:
+            image = Image.open(image_path)
+            exif_data = image._getexif()
+            if exif_data:
+                return {TAGS.get(tag): value for tag, value in exif_data.items() if tag in TAGS}
+        except Exception as e:
+            print(f"Error getting EXIF data: {e}")
+        return None
+
+    def filter_date(self):
+        selected_date = self.date_edit.date().toPyDate()
+        filtered_image_paths = [path for path in self.image_paths if self.get_image_creation_date(path) == selected_date]
+        self.display_images(filtered_image_paths)
+
+    def filter_today(self):
+        self.date_edit.setDate(datetime.date.today())
+        self.filter_date()
+
+    def filter_this_week(self):
+        today = datetime.date.today()
+        start_of_week = today - datetime.timedelta(days=today.weekday())
+        filtered_image_paths = [path for path in self.image_paths if start_of_week <= self.get_image_creation_date(path) <= today]
+        self.display_images(filtered_image_paths)
+
+    def get_image_creation_date(self, image_path):
+        exif_data = self.get_exif_data(image_path)
+        if exif_data and "DateTimeOriginal" in exif_data:
+            try:
+                date_string = exif_data["DateTimeOriginal"]
+                return datetime.datetime.strptime(date_string, "%Y:%m:%d %H:%M:%S").date()
+            except ValueError:
+                pass
+        return datetime.date.fromtimestamp(os.path.getmtime(image_path))
 
 
     def show_all_images(self):
@@ -179,8 +255,6 @@ class App(QMainWindow):
 
     def display_images(self, image_paths):
         self.image_list.clear()
-        self.progress_bar.setRange(0, len(image_paths))
-        self.progress_bar.setValue(0)
         
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = [executor.submit(self.load_thumbnail, image_path) for image_path in image_paths]
@@ -188,7 +262,6 @@ class App(QMainWindow):
                 item, icon = future.result()
                 self.image_list.addItem(item)
                 item.setIcon(icon)
-                self.progress_bar.setValue(self.progress_bar.value() + 1)
 
     @lru_cache(maxsize=128)
     def load_thumbnail(self, image_path):
