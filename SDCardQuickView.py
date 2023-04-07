@@ -20,6 +20,10 @@ class ImageLoader(QThread):
         for image_path in self.image_paths:
             pixmap = QPixmap(image_path)
             self.image_loaded.emit(image_path, pixmap)
+    
+    def stop(self):
+        self.terminate()
+
 
 
 class App(QMainWindow):
@@ -49,10 +53,13 @@ class App(QMainWindow):
         self.tree_view.setDragDropMode(QTreeView.DropOnly)
         self.tree_view.dragEnterEvent = self.dragEnterEvent
         self.tree_view.dropEvent = self.dropEvent
-        self.tree_view.clicked.connect(self.tree_item_clicked)
+       
 
         self.file_system_model = QFileSystemModel()
         self.tree_view.setModel(self.file_system_model)
+        
+        self.image_paths = []
+
 
         self.tree_view.setRootIndex(self.file_system_model.index(""))
         splitter.addWidget(self.tree_view)
@@ -103,13 +110,12 @@ class App(QMainWindow):
         self.progress_bar = QProgressBar()
         buttons_layout.addWidget(self.progress_bar)
         
-        loader = ImageLoader(image_paths)
-        loader.image_loaded.connect(self.add_thumbnail_to_list)
-        loader.start()
+        self.tree_view.clicked.connect(self.tree_item_clicked)
+        
 
-def add_thumbnail_to_list(self, image_path, pixmap):
-    item = QListWidgetItem(QIcon(pixmap), os.path.basename(image_path))
-    self.image_list.addItem(item)
+    def add_thumbnail_to_list(self, image_path, pixmap):
+        item = QListWidgetItem(QIcon(pixmap), os.path.basename(image_path))
+        self.image_list.addItem(item)
 
 
 
@@ -127,9 +133,14 @@ def add_thumbnail_to_list(self, image_path, pixmap):
             self.tree_view.setRootIndex(self.file_system_model.index(folder))
             self.generate_preview()
 
-            loader = ImageLoader(self.image_paths)
-            loader.image_loaded.connect(self.add_thumbnail_to_list)
-            loader.start()
+            if hasattr(self, 'loader'):
+                self.loader.stop()
+                self.loader.wait()
+
+            self.loader = ImageLoader(self.image_paths)
+            self.loader.image_loaded.connect(self.add_thumbnail_to_list)
+            self.loader.start()
+
 
             
     def on_open_folder_clicked(self):
@@ -199,6 +210,7 @@ def add_thumbnail_to_list(self, image_path, pixmap):
         if os.path.isdir(path):
             self.image_paths = sorted(self.get_image_files(path))
             self.display_images(self.image_paths)
+
 
 
     def filter_images(self):
