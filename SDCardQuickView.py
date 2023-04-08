@@ -5,6 +5,8 @@ import datetime
 import cProfile
 import pstats
 from functools import lru_cache
+from PyQt5.QtWidgets import QDockWidget
+
 from PyQt5.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -27,6 +29,7 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QTableWidget,
     QTableWidgetItem,
+    QDockWidget
 )
 from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QModelIndex, QDate
 from PyQt5.QtGui import QPixmap, QIcon, QImage, QColor
@@ -36,6 +39,7 @@ import concurrent.futures
 from PIL import Image
 from PIL.ExifTags import TAGS
 
+IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif",".HEIC",".ARW",".RAW",".HIF",".DNG",".JPG")
 
 class CustomTreeView(QTreeView):
     def __init__(self, parent=None):
@@ -44,9 +48,8 @@ class CustomTreeView(QTreeView):
     def mousePressEvent(self, event):
         index = self.indexAt(event.pos())
         if not index.isValid():
-            self.on_open_folder_clicked()
+            self.parent().parent().parent().on_open_folder_clicked()
         super().mousePressEvent(event)
-
 
 class ImageLoader(QThread):
     image_loaded = pyqtSignal(str, QPixmap)
@@ -63,22 +66,6 @@ class ImageLoader(QThread):
     def stop(self):
         self.terminate()
 
-class ExifInfoWindow(QMainWindow):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle("EXIF Information")
-        self.setGeometry(200, 200, 500, 500)
-
-        central_widget = QWidget()
-        self.setCentralWidget(central_widget)
-
-        layout = QVBoxLayout()
-        central_widget.setLayout(layout)
-
-        self.property_table = QTableWidget()
-        self.property_table.setColumnCount(2)
-        self.property_table.setHorizontalHeaderLabels(["Property", "Value"])
-        layout.addWidget(self.property_table)
 
     def set_properties(self, properties):
         self.property_table.setRowCount(len(properties))
@@ -100,18 +87,16 @@ class App(QMainWindow):
         main_widget = QWidget()
         self.setCentralWidget(main_widget)
 
-        layout = QHBoxLayout()
-        main_widget.setLayout(layout)
-
+        layout = QHBoxLayout(main_widget)
         splitter = QSplitter(Qt.Horizontal)
         layout.addWidget(splitter)
 
-        self.file_system_model = QFileSystemModel()
-        
-        self.image_preview_label = QLabel()
-        splitter.addWidget(self.image_preview_label)
+        # 删除空白区域
 
-        
+        self.file_system_model = QFileSystemModel()
+
+        self.image_preview_label = QLabel()
+        # splitter.addWidget(self.image_preview_label)
 
         self.tree_view = CustomTreeView(self)
         self.tree_view.setModel(self.file_system_model)
@@ -126,9 +111,8 @@ class App(QMainWindow):
         splitter.addWidget(self.image_list)
 
         buttons_widget = QWidget()
-        buttons_layout = QVBoxLayout()
-        buttons_widget.setLayout(buttons_layout)
         splitter.addWidget(buttons_widget)
+        buttons_layout = QVBoxLayout(buttons_widget)
 
         open_button = QPushButton("Open Folder")
         buttons_layout.addWidget(open_button)
@@ -146,6 +130,9 @@ class App(QMainWindow):
         )
         self.start_date_edit.setDate(QDate.currentDate().addMonths(-1))
         self.start_date_edit.setDisplayFormat("yyyy-MM-dd")
+
+        self.file_list_widget = QListWidget()
+        layout.addWidget(self.file_list_widget)
 
         filter_date_layout.addWidget(QLabel("End Date:"), 1, 0)
         self.end_date_edit = QDateEdit()
@@ -178,9 +165,29 @@ class App(QMainWindow):
         deselect_all_button.clicked.connect(self.deselect_all_images)
 
         self.tree_view.clicked.connect(self.tree_item_clicked)
+        self.tree_view.clicked.connect(self.on_open_folder_clicked)
 
         self.image_list.itemClicked.connect(self.open_image)
-        self.image_list.itemDoubleClicked.connect(self.show_exif_info)
+        self.image_list.itemDoubleClicked.connect(self.open_image)
+        self.image_list.setContextMenuPolicy(Qt.CustomContextMenu)
+
+        self.setMouseTracking(True)
+        self.mousePressEvent = self.on_mouse_press_event
+
+
+
+    def on_mouse_press_event(self, event):
+        print(f"Mouse clicked on {event.pos()} in widget {self.sender()}")
+
+
+    def mousePressEvent(self, event):
+        widget = self.childAt(event.pos())
+        if widget is not None:
+            print(f"Mouse clicked on {event.pos()} in widget {widget.objectName()}")
+        else:
+            print(f"Mouse clicked on {event.pos()} in empty area")
+
+
 
     def tree_item_clicked(self, index):
         path = self.file_system_model.filePath(index)
@@ -211,25 +218,53 @@ class App(QMainWindow):
             exif_window.set_properties(properties)
             exif_window.show()
 
+    def open_exif_info_window(self):
+        selected_items = self.image_list.selectedItems()
+        if not selected_items:
+            return
 
-    def show_exif_info(self, item):
-        image_path = os.path.join(self.current_folder, item.text())
-        with Image.open(image_path) as img:
-            exif_data = img.getexif()
-        if exif_data:
-            exif_str = ""
-            for tag_id in exif_data:
-                tag_name = TAGS.get(tag_id, tag_id)
-                tag_value = exif_data.get(tag_id)
-                if isinstance(tag_value, bytes):
-                    tag_value = tag_value.decode("utf-8", errors="replace")
-                exif_str += f"{tag_name}: {tag_value}\n"
-            QMessageBox.information(self, "EXIF Information", exif_str)
+        if len(selected_items) == 1:
+            image_path = os.path.join(self.current_folder, selected_items[0].text())
+            with Image.open(image_path) as img:
+                exif_data = img.getexif()
+            if exif_data:
+                properties = []
+                for tag_id in exif_data:
+                    tag_name = TAGS.get(tag_id, tag_id)
+                    tag_value = exif_data.get(tag_id)
+                    if isinstance(tag_value, bytes):
+                        tag_value = tag_value.decode("utf-8", errors="replace")
+                    properties.append((tag_name, tag_value))
+                self.exif_dock_widget.set_properties(properties)
+                self.exif_dock_widget.show()
+            else:
+                QMessageBox.warning(
+                    self, "No EXIF Information", "No EXIF data found for this image."
+                )
         else:
             QMessageBox.warning(
-                self, "No EXIF Information", "No EXIF data found for this image."
+                self, "Multiple Images Selected", "Please select only one image."
             )
 
+        # 获取缩略图
+    def get_thumbnail(file_path, size=(128, 128)):
+        with Image.open(file_path) as image:
+            image.thumbnail(size)
+            return image
+
+    # 将图像转换为QPixmap
+    def get_pixmap(image):
+        image_data = image.tobytes()
+        qimage = QtGui.QImage(image_data, image.size[0], image.size[1], QtGui.QImage.Format_RGB888)
+        pixmap = QtGui.QPixmap.fromImage(qimage)
+        return pixmap
+
+    # 设置列表项目的缩略图
+    def set_thumbnail(item, file_path):
+        image = get_thumbnail(file_path)
+        pixmap = get_pixmap(image)
+        item.setIcon(QtGui.QIcon(pixmap))
+    
     def apply_filter(self):
         start_date = self.start_date_edit.date().toPyDate()
         end_date = self.end_date_edit.date().toPyDate()
@@ -245,7 +280,7 @@ class App(QMainWindow):
                 item.setHidden(False)
             else:
                 item.setHidden(True)
-
+    
 
     def open_exif_info_window(self):
         selected_items = self.image_list.selectedItems()
@@ -326,10 +361,23 @@ class App(QMainWindow):
                 item.setHidden(True)
 
     def on_open_folder_clicked(self):
-        folder = QFileDialog.getExistingDirectory(self, "Select folder")
-        if folder:
-            self.current_folder = folder
-            self.load_images(folder)
+        # Open a file dialog to select a folder
+        folder_path = QFileDialog.getExistingDirectory(self, "Select Folder")
+
+
+        if folder_path:
+            # Clear the previous items in the list
+            self.file_list_widget.clear()
+
+            # Add the files in the folder to the list
+            for file_name in os.listdir(folder_path):
+                if file_name.endswith(IMAGE_EXTENSIONS):
+                    file_path = os.path.join(folder_path, file_name)
+                    item = QListWidgetItem(file_name)
+                    item.setToolTip(file_path)
+                    self.file_list_widget.addItem(item)
+
+
 
     def select_all_images(self):
         self.image_list.selectAll()
@@ -361,12 +409,13 @@ class App(QMainWindow):
             f
             for f in os.listdir(folder)
             if os.path.splitext(f)[1].lower()
-            in {".png", ".jpg", ".jpeg", ".gif", ".bmp"}
+            in {".jpg", ".jpeg", ".png", ".gif",".HEIC",".ARW",".RAW",".HIF",".DNG",".JPG"}
         ]
         for image_file in image_files:
             item = QListWidgetItem(image_file)
             item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
             item.setCheckState(Qt.Unchecked)
+            set_thumbnail(item, os.path.join(folder, image_file))  # 设置缩略图
             self.image_list.addItem(item)
 
     def generate_preview(self):
@@ -386,27 +435,9 @@ class App(QMainWindow):
                         if item.text() == os.path.basename(image_path):
                             item.setIcon(QIcon(preview))
 
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = App()
     window.show()
-
-    # 开始性能分析
-    pr = cProfile.Profile()
-    pr.enable()
-
-    app.exec_()
-
-    # 结束性能分析
-    pr.disable()
-    s = io.StringIO()
-    sortby = 'cumulative'
-    ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
-    ps.print_stats()
-
-    with open('/Users/qz/Downloads/SDCardQuickView/性能测试/profile_results.txt', 'w') as f:
-        f.write(s.getvalue())
-
-    sys.exit()
+    sys.exit(app.exec_())
 
