@@ -1,0 +1,25 @@
+         696 function calls in 8.949 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    2.140    2.140    8.949    8.949 {built-in method exec_}
+        1    0.000    0.000    6.810    6.810 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:328(on_open_folder_clicked)
+        1    6.808    6.808    6.808    6.808 {getExistingDirectory}
+        1    0.000    0.000    0.001    0.001 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:358(load_images)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:360(<listcomp>)
+       64    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/posixpath.py:117(splitext)
+        1    0.000    0.000    0.000    0.000 {built-in method posix.listdir}
+       64    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/genericpath.py:121(_splitext)
+       60    0.000    0.000    0.000    0.000 {built-in method addItem}
+       60    0.000    0.000    0.000    0.000 {built-in method setCheckState}
+        1    0.000    0.000    0.000    0.000 {built-in method clear}
+      128    0.000    0.000    0.000    0.000 {method 'rfind' of 'str' objects}
+       60    0.000    0.000    0.000    0.000 {built-in method flags}
+       60    0.000    0.000    0.000    0.000 {built-in method setFlags}
+       64    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+       64    0.000    0.000    0.000    0.000 {method 'lower' of 'str' objects}
+       64    0.000    0.000    0.000    0.000 {built-in method posix.fspath}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
