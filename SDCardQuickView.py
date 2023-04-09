@@ -5,8 +5,7 @@ import datetime
 import cProfile
 import pstats
 from functools import lru_cache
-from PyQt5.QtWidgets import QDockWidget
-
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -29,7 +28,6 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QTableWidget,
     QTableWidgetItem,
-    QDockWidget
 )
 from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QModelIndex, QDate
 from PyQt5.QtGui import QPixmap, QIcon, QImage, QColor
@@ -39,80 +37,34 @@ import concurrent.futures
 from PIL import Image
 from PIL.ExifTags import TAGS
 
-IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif",".HEIC",".ARW",".RAW",".HIF",".DNG",".JPG")
-
-class CustomTreeView(QTreeView):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-    def mousePressEvent(self, event):
-        index = self.indexAt(event.pos())
-        if not index.isValid():
-            self.parent().parent().parent().on_open_folder_clicked()
-        super().mousePressEvent(event)
-
-class ImageLoader(QThread):
-    image_loaded = pyqtSignal(str, QPixmap)
-
-    def __init__(self, image_paths):
-        super().__init__()
-        self.image_paths = image_paths
-
-    def run(self):
-        for image_path in self.image_paths:
-            pixmap = QPixmap(image_path)
-            self.image_loaded.emit(image_path, pixmap)
-
-    def stop(self):
-        self.terminate()
-
-
-    def set_properties(self, properties):
-        self.property_table.setRowCount(len(properties))
-        for row, (name, value) in enumerate(properties):
-            name_item = QTableWidgetItem(name)
-            value_item = QTableWidgetItem(str(value))
-            self.property_table.setItem(row, 0, name_item)
-            self.property_table.setItem(row, 1, value_item)
-
-
 
 class App(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Image Viewer")
+        self.setWindowTitle("SD卡照片快速查看器")
         self.setGeometry(100, 100, 1200, 800)
+        self.root_folder = os.path.dirname(os.path.abspath(__file__))
+        self.current_folder = self.root_folder
+        self.images = self.create_image_list()
 
         main_widget = QWidget()
         self.setCentralWidget(main_widget)
 
-        layout = QHBoxLayout(main_widget)
-        splitter = QSplitter(Qt.Horizontal)
-        layout.addWidget(splitter)
-
-        # 删除空白区域
-
-        self.file_system_model = QFileSystemModel()
-
-        self.image_preview_label = QLabel()
-        # splitter.addWidget(self.image_preview_label)
-
-        self.tree_view = CustomTreeView(self)
-        self.tree_view.setModel(self.file_system_model)
-        self.tree_view.setRootIndex(self.file_system_model.index(""))
-        splitter.addWidget(self.tree_view)
+        layout = QHBoxLayout()
+        main_widget.setLayout(layout)
 
         self.image_list = QListWidget()
         self.image_list.setViewMode(QListWidget.IconMode)
-        self.image_list.setIconSize(QSize(200, 200))
+        self.image_list.setIconSize(QSize(100, 100))
         self.image_list.setResizeMode(QListWidget.Adjust)
         self.image_list.setSelectionMode(QListWidget.ExtendedSelection)
-        splitter.addWidget(self.image_list)
+        layout.addWidget(self.image_list)
 
         buttons_widget = QWidget()
-        splitter.addWidget(buttons_widget)
-        buttons_layout = QVBoxLayout(buttons_widget)
+        buttons_layout = QVBoxLayout()
+        buttons_widget.setLayout(buttons_layout)
+        layout.addWidget(buttons_widget)
 
         open_button = QPushButton("Open Folder")
         buttons_layout.addWidget(open_button)
@@ -131,9 +83,6 @@ class App(QMainWindow):
         self.start_date_edit.setDate(QDate.currentDate().addMonths(-1))
         self.start_date_edit.setDisplayFormat("yyyy-MM-dd")
 
-        self.file_list_widget = QListWidget()
-        layout.addWidget(self.file_list_widget)
-
         filter_date_layout.addWidget(QLabel("End Date:"), 1, 0)
         self.end_date_edit = QDateEdit()
         filter_date_layout.addWidget(self.end_date_edit, 1, 1)
@@ -144,296 +93,117 @@ class App(QMainWindow):
         self.end_date_edit.setDate(QDate.currentDate())
         self.end_date_edit.setDisplayFormat("yyyy-MM-dd")
 
-        filter_date_button = QPushButton("Apply Date Filter")
+        filter_date_button = QPushButton("应用日期筛选")
         buttons_layout.addWidget(filter_date_button)
         filter_date_button.clicked.connect(self.apply_date_filter)
 
-        generate_preview_button = QPushButton("Generate Preview")
-        buttons_layout.addWidget(generate_preview_button)
-        generate_preview_button.clicked.connect(self.generate_preview)
-
-        delete_button = QPushButton("Delete Selected Images")
+        delete_button = QPushButton("删除选中照片")
         buttons_layout.addWidget(delete_button)
         delete_button.clicked.connect(self.delete_images)
 
-        select_all_button = QPushButton("Select All")
+        select_all_button = QPushButton("全选")
         buttons_layout.addWidget(select_all_button)
         select_all_button.clicked.connect(self.select_all_images)
 
-        deselect_all_button = QPushButton("Deselect All")
+        deselect_all_button = QPushButton("取消全选")
         buttons_layout.addWidget(deselect_all_button)
         deselect_all_button.clicked.connect(self.deselect_all_images)
 
-        self.tree_view.clicked.connect(self.tree_item_clicked)
-        self.tree_view.clicked.connect(self.on_open_folder_clicked)
+        buttons_layout.addStretch()
 
-        self.image_list.itemClicked.connect(self.open_image)
-        self.image_list.itemDoubleClicked.connect(self.open_image)
-        self.image_list.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.statusBar()
 
-        self.setMouseTracking(True)
-        self.mousePressEvent = self.on_mouse_press_event
+        self.load_images()
 
-
-
-    def on_mouse_press_event(self, event):
-        print(f"Mouse clicked on {event.pos()} in widget {self.sender()}")
-
-
-    def mousePressEvent(self, event):
-        widget = self.childAt(event.pos())
-        if widget is not None:
-            print(f"Mouse clicked on {event.pos()} in widget {widget.objectName()}")
-        else:
-            print(f"Mouse clicked on {event.pos()} in empty area")
+    def create_image_list(self):
+        image_list = []
+        for root, dirs, files in os.walk(self.current_folder):
+            for file in files:
+                if file.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp", ".3fr", ".ari", ".arw", ".bay", 
+                                        ".cap", ".cr2", ".cr3", ".crw", ".dcr", ".dcs", ".dng", ".drf", ".eip", 
+                                        ".erf", ".fff", ".gpr", ".iiq", ".k25", ".kdc", ".mdc", ".mef", ".mos", 
+                                        ".mrw", ".nef", ".nrw", ".orf", ".pef", ".ptx", ".pxn", ".r3d", ".raf", 
+                                        ".raw", ".rwl", ".rw2", ".rwz", ".sr2", ".srf", ".srw", ".tif", ".x3f",".HIF")):
+                    image_list.append(os.path.join(root, file))
+        return image_list
 
 
+    def load_images(self):
+        self.image_list.clear()
+        for image_path in self.images:
+            pixmap = QPixmap()
+            pixmap.load(image_path)
+            icon = QIcon(pixmap.scaled(100, 100, Qt.KeepAspectRatio))
+            item = QListWidgetItem(os.path.basename(image_path))
+            item.setIcon(icon)
+            item.setCheckState(Qt.Unchecked)
+            item.setData(Qt.UserRole, image_path)  # Store the image path as item data
+            self.image_list.addItem(item)
 
-    def tree_item_clicked(self, index):
-        path = self.file_system_model.filePath(index)
-        if os.path.isdir(path):
-            self.load_images(path)
+        self.image_list.itemChanged.connect(self.on_item_changed)
 
-    def open_image(self, item):
-        image_path = os.path.join(self.current_folder, item.text())
-        image_preview = QPixmap(image_path)
-        if image_preview.width() > self.image_preview_label.width() or image_preview.height() > self.image_preview_label.height():
-            image_preview = image_preview.scaled(self.image_preview_label.width(), self.image_preview_label.height(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        self.image_preview_label.setPixmap(image_preview)
-
-        # Show EXIF info window
-        properties = []
-        with Image.open(image_path) as img:
-            exif_data = img.getexif()
-            if exif_data:
-                for tag_id in exif_data:
-                    tag_name = TAGS.get(tag_id, tag_id)
-                    tag_value = exif_data.get(tag_id)
-                    if isinstance(tag_value, bytes):
-                        tag_value = tag_value.decode("utf-8", errors="replace")
-                    properties.append((tag_name, tag_value))
-
-        if properties:
-            exif_window = ExifInfoWindow(self)
-            exif_window.set_properties(properties)
-            exif_window.show()
-
-    def open_exif_info_window(self):
-        selected_items = self.image_list.selectedItems()
-        if not selected_items:
-            return
-
-        if len(selected_items) == 1:
-            image_path = os.path.join(self.current_folder, selected_items[0].text())
-            with Image.open(image_path) as img:
-                exif_data = img.getexif()
-            if exif_data:
-                properties = []
-                for tag_id in exif_data:
-                    tag_name = TAGS.get(tag_id, tag_id)
-                    tag_value = exif_data.get(tag_id)
-                    if isinstance(tag_value, bytes):
-                        tag_value = tag_value.decode("utf-8", errors="replace")
-                    properties.append((tag_name, tag_value))
-                self.exif_dock_widget.set_properties(properties)
-                self.exif_dock_widget.show()
-            else:
-                QMessageBox.warning(
-                    self, "No EXIF Information", "No EXIF data found for this image."
-                )
-        else:
-            QMessageBox.warning(
-                self, "Multiple Images Selected", "Please select only one image."
-            )
-
-        # 获取缩略图
-    def get_thumbnail(file_path, size=(128, 128)):
-        with Image.open(file_path) as image:
-            image.thumbnail(size)
-            return image
-
-    # 将图像转换为QPixmap
-    def get_pixmap(image):
-        image_data = image.tobytes()
-        qimage = QtGui.QImage(image_data, image.size[0], image.size[1], QtGui.QImage.Format_RGB888)
-        pixmap = QtGui.QPixmap.fromImage(qimage)
-        return pixmap
-
-    # 设置列表项目的缩略图
-    def set_thumbnail(item, file_path):
-        image = get_thumbnail(file_path)
-        pixmap = get_pixmap(image)
-        item.setIcon(QtGui.QIcon(pixmap))
+    def on_item_changed(self, item):
+        item.setSelected(item.checkState() == Qt.Checked)
     
-    def apply_filter(self):
-        start_date = self.start_date_edit.date().toPyDate()
-        end_date = self.end_date_edit.date().toPyDate()
-        selected_items = self.image_list.selectedItems()
-
-        for i in range(self.image_list.count()):
-            item = self.image_list.item(i)
-            image_path = os.path.join(self.current_folder, item.text())
-            creation_time = datetime.datetime.fromtimestamp(
-                os.path.getctime(image_path)
-            ).date()
-            if start_date <= creation_time <= end_date:
-                item.setHidden(False)
-            else:
-                item.setHidden(True)
-    
-
-    def open_exif_info_window(self):
-        selected_items = self.image_list.selectedItems()
-        if not selected_items:
-            return
-
-        if len(selected_items) == 1:
-            image_path = os.path.join(self.current_folder, selected_items[0].text())
-            with Image.open(image_path) as img:
-                exif_data = img.getexif()
-            if exif_data:
-                exif_str = ""
-                for tag_id in exif_data:
-                    tag_name = TAGS.get(tag_id, tag_id)
-                    tag_value = exif_data.get(tag_id)
-                    if isinstance(tag_value, bytes):
-                        tag_value = tag_value.decode("utf-8", errors="replace")
-                    exif_str += f"{tag_name}: {tag_value}\n"
-                QMessageBox.information(self, "EXIF Information", exif_str)
-            else:
-                QMessageBox.warning(
-                    self, "No EXIF Information", "No EXIF data found for this image."
-                )
-        else:
-            exif_str = ""
-            for item in selected_items:
-                image_path = os.path.join(self.current_folder, item.text())
-                with Image.open(image_path) as img:
-                    exif_data = img.getexif()
-                if exif_data:
-                    exif_str += f"EXIF Information for {item.text()}:\n"
-                    for tag_id in exif_data:
-                        tag_name = TAGS.get(tag_id, tag_id)
-                        tag_value = exif_data.get(tag_id)
-                        if isinstance(tag_value, bytes):
-                            tag_value = tag_value.decode("utf-8", errors="replace")
-                        exif_str += f"{tag_name}: {tag_value}\n"
-                else:
-                    exif_str += f"No EXIF data found for {item.text()}.\n"
-                exif_str += "\n"
-            exif_window = ExifInfoWindow(exif_str)
-            exif_window.show()
-
-    def generate_preview_worker(self, image_path):
-        preview_size = QSize(200, 200)
-        image = Image.open(image_path)
-        image.thumbnail(preview_size)
-        preview = QPixmap.fromImage(ImageQt(image))
-        return image_path, preview
-
-
-    def set_properties(self, properties):
-        self.property_table.setRowCount(len(properties))
-        for row, (name, value) in enumerate(properties):
-            name_item = QTableWidgetItem(name)
-            value_item = QTableWidgetItem(str(value))
-            self.property_table.setItem(row, 0, name_item)
-            self.property_table.setItem(row, 1, value_item)
-
-    def clear_properties(self):
-        self.property_table.setRowCount(0)
-
+    def on_open_folder_clicked(self):
+        folder = QFileDialog.getExistingDirectory(self, "Select a folder", self.root_folder)
+        if folder:
+            self.current_folder = folder
+            self.images = self.create_image_list()
+            self.load_images()
 
     def apply_date_filter(self):
         start_date = self.start_date_edit.date().toPyDate()
         end_date = self.end_date_edit.date().toPyDate()
-        selected_items = self.image_list.selectedItems()
+        self.images = [image for image in self.create_image_list() if self.is_image_within_date_range(image, start_date, end_date)]
+        self.load_images()
 
-        for i in range(self.image_list.count()):
-            item = self.image_list.item(i)
-            image_path = os.path.join(self.current_folder, item.text())
-            creation_time = datetime.datetime.fromtimestamp(
-                os.path.getctime(image_path)
-            ).date()
-            if start_date <= creation_time <= end_date:
-                item.setHidden(False)
-            else:
-                item.setHidden(True)
+    def is_image_within_date_range(self, image_path, start_date, end_date):
+        image_date = self.get_image_date(image_path)
+        return start_date <= image_date <= end_date
 
-    def on_open_folder_clicked(self):
-        # Open a file dialog to select a folder
-        folder_path = QFileDialog.getExistingDirectory(self, "Select Folder")
-
-
-        if folder_path:
-            # Clear the previous items in the list
-            self.file_list_widget.clear()
-
-            # Add the files in the folder to the list
-            for file_name in os.listdir(folder_path):
-                if file_name.endswith(IMAGE_EXTENSIONS):
-                    file_path = os.path.join(folder_path, file_name)
-                    item = QListWidgetItem(file_name)
-                    item.setToolTip(file_path)
-                    self.file_list_widget.addItem(item)
-
-
-
-    def select_all_images(self):
-        self.image_list.selectAll()
-
-    def deselect_all_images(self):
-        self.image_list.clearSelection()
+    def get_image_date(self, image_path):
+        try:
+            with Image.open(image_path) as img:
+                exif_data = img._getexif()
+            if exif_data:
+                for tag, value in exif_data.items():
+                    if TAGS.get(tag) == "DateTime":
+                        return datetime.datetime.strptime(value, "%Y:%m:%d %H:%M:%S").date()
+        except Exception as e:
+            print(f"Error reading image metadata: {e}")
+        return datetime.datetime.fromtimestamp(os.path.getmtime(image_path)).date()
 
     def delete_images(self):
-        selected_items = self.image_list.selectedItems()
-        if selected_items:
-            reply = QMessageBox.question(
-                self,
-                "Delete Images",
-                "Are you sure you want to delete the selected images?",
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No  # Default value
-            )
+        selected_items = [self.image_list.item(i) for i in range(self.image_list.count()) if self.image_list.item(i).isSelected()]
 
-            if reply == QMessageBox.Yes:
-                for item in selected_items:
-                    image_path = os.path.join(self.current_folder, item.text())
+        if not selected_items:
+            QMessageBox.information(self, "No images selected", "Please select images to delete.")
+            return
+
+        reply = QMessageBox.question(self, "Delete Images", "Are you sure you want to delete the selected images?",
+                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            for item in selected_items:
+                image_path = item.data(Qt.UserRole)  # Get the image path from item data
+                try:
                     os.remove(image_path)
-                    self.image_list.takeItem(self.image_list.row(item))
+                except Exception as e:
+                    print(f"Error deleting image: {e}")
+                    QMessageBox.critical(self, "Error", f"Error deleting image: {e}")
+                self.image_list.takeItem(self.image_list.row(item))
 
+    def select_all_images(self):
+        for index in range(self.image_list.count()):
+            item = self.image_list.item(index)
+            item.setSelected(True)
 
-    def load_images(self, folder):
-        self.image_list.clear()
-        image_files = [
-            f
-            for f in os.listdir(folder)
-            if os.path.splitext(f)[1].lower()
-            in {".jpg", ".jpeg", ".png", ".gif",".HEIC",".ARW",".RAW",".HIF",".DNG",".JPG"}
-        ]
-        for image_file in image_files:
-            item = QListWidgetItem(image_file)
-            item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
-            item.setCheckState(Qt.Unchecked)
-            set_thumbnail(item, os.path.join(folder, image_file))  # 设置缩略图
-            self.image_list.addItem(item)
+    def deselect_all_images(self):
+        for index in range(self.image_list.count()):
+            item = self.image_list.item(index)
+            item.setSelected(False)
 
-    def generate_preview(self):
-        selected_items = self.image_list.selectedItems()
-        if selected_items:
-            with concurrent.futures.ThreadPoolExecutor() as executor:
-                futures = []
-                for item in selected_items:
-                    image_path = os.path.join(self.current_folder, item.text())
-                    future = executor.submit(self.generate_preview_worker, image_path)
-                    futures.append(future)
-
-                for future in concurrent.futures.as_completed(futures):
-                    image_path, preview = future.result()
-                    for i in range(self.image_list.count()):
-                        item = self.image_list.item(i)
-                        if item.text() == os.path.basename(image_path):
-                            item.setIcon(QIcon(preview))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

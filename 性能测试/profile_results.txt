@@ -1,11 +1,508 @@
-         4 function calls in 6.461 seconds
+         17817 function calls (17496 primitive calls) in 506.042 seconds
 
    Ordered by: cumulative time
 
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        1    4.025    4.025    6.461    6.461 {built-in method exec_}
-        1    0.001    0.001    2.436    2.436 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:313(on_open_folder_clicked)
-        1    2.435    2.435    2.435    2.435 {getExistingDirectory}
+        1  496.863  496.863  506.042  506.042 {built-in method exec_}
+        2    0.000    0.000    7.902    3.951 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:380(on_open_folder_clicked)
+        2    7.900    3.950    7.900    3.950 {getExistingDirectory}
+       16    0.694    0.043    1.277    0.080 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:242(open_image)
+       11    0.000    0.000    0.518    0.047 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:1024(getexif)
+       11    0.001    0.000    0.518    0.047 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:155(load)
+      159    0.502    0.003    0.502    0.003 {method 'decode' of 'ImagingDecoder' objects}
+       16    0.000    0.000    0.032    0.002 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3183(open)
+     19/7    0.000    0.000    0.025    0.004 <frozen importlib._bootstrap>:1053(_handle_fromlist)
+     47/6    0.000    0.000    0.025    0.004 <frozen importlib._bootstrap>:233(_call_with_frames_removed)
+     15/6    0.000    0.000    0.025    0.004 {built-in method builtins.__import__}
+     28/6    0.000    0.000    0.025    0.004 <frozen importlib._bootstrap>:1022(_find_and_load)
+     28/6    0.000    0.000    0.025    0.004 <frozen importlib._bootstrap>:987(_find_and_load_unlocked)
+     27/6    0.000    0.000    0.025    0.004 <frozen importlib._bootstrap>:664(_load_unlocked)
+     22/6    0.000    0.000    0.024    0.004 <frozen importlib._bootstrap_external>:877(exec_module)
+     22/6    0.000    0.000    0.021    0.003 {built-in method builtins.exec}
+       16    0.000    0.000    0.017    0.001 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:322(preinit)
+        2    0.017    0.008    0.017    0.008 {built-in method show}
+       16    0.000    0.000    0.013    0.001 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3251(_open_core)
+       16    0.000    0.000    0.013    0.001 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:88(__init__)
+       11    0.000    0.000    0.011    0.001 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:924(load_prepare)
+       11    0.000    0.000    0.011    0.001 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:292(load_prepare)
+       11    0.011    0.001    0.011    0.001 {built-in method PIL._imaging.new}
+       15    0.010    0.001    0.010    0.001 {built-in method scaled}
+       22    0.000    0.000    0.010    0.000 <frozen importlib._bootstrap_external>:950(get_code)
+        5    0.000    0.000    0.009    0.002 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:821(jpeg_factory)
+       17    0.000    0.000    0.009    0.001 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:1431(getexif)
+        5    0.000    0.000    0.009    0.002 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:350(_open)
+       12    0.000    0.000    0.009    0.001 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:61(APP)
+        2    0.000    0.000    0.009    0.004 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3695(load)
+      541    0.008    0.000    0.008    0.000 {method 'read' of '_io.BufferedReader' objects}
+        1    0.000    0.000    0.008    0.008 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:1(<module>)
+       22    0.000    0.000    0.007    0.000 <frozen importlib._bootstrap_external>:1070(get_data)
+        1    0.000    0.000    0.007    0.007 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/GifImagePlugin.py:1(<module>)
+    27/26    0.000    0.000    0.006    0.000 <frozen importlib._bootstrap>:564(module_from_spec)
+        5    0.000    0.000    0.006    0.001 <frozen importlib._bootstrap_external>:1174(create_module)
+        5    0.004    0.001    0.006    0.001 {built-in method _imp.create_dynamic}
+        1    0.000    0.000    0.005    0.005 /Users/qz/miniconda3/lib/python3.10/subprocess.py:1(<module>)
+        1    0.000    0.000    0.005    0.005 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/BmpImagePlugin.py:1(<module>)
+        1    0.000    0.000    0.005    0.005 /Users/qz/miniconda3/lib/python3.10/fractions.py:1(<module>)
+        1    0.000    0.000    0.004    0.004 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImagePalette.py:1(<module>)
+       11    0.000    0.000    0.003    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:714(_open)
+       28    0.000    0.000    0.003    0.000 <frozen importlib._bootstrap>:921(_find_spec)
+        1    0.000    0.000    0.003    0.003 /Users/qz/miniconda3/lib/python3.10/decimal.py:1(<module>)
+        2    0.002    0.001    0.003    0.002 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:83(__init__)
+       28    0.000    0.000    0.003    0.000 <frozen importlib._bootstrap_external>:1431(find_spec)
+       28    0.000    0.000    0.003    0.000 <frozen importlib._bootstrap_external>:1399(_get_spec)
+      159    0.000    0.000    0.003    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:933(load_read)
+       47    0.000    0.000    0.003    0.000 <frozen importlib._bootstrap_external>:1536(find_spec)
+       55    0.000    0.000    0.003    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:199(call)
+       96    0.000    0.000    0.002    0.000 <frozen importlib._bootstrap_external>:140(_path_stat)
+       22    0.000    0.000    0.002    0.000 <frozen importlib._bootstrap_external>:670(_compile_bytecode)
+       96    0.002    0.000    0.002    0.000 {built-in method posix.stat}
+        6    0.000    0.000    0.002    0.000 /Users/qz/miniconda3/lib/python3.10/re.py:288(_compile)
+        4    0.000    0.000    0.002    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:783(compile)
+       22    0.002    0.000    0.002    0.000 {built-in method marshal.loads}
+       54    0.000    0.000    0.002    0.000 {built-in method builtins.__build_class__}
+        8    0.000    0.000    0.002    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:396(chunk_iCCP)
+        2    0.000    0.000    0.002    0.001 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:410(load_images)
+        8    0.000    0.000    0.002    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:145(_safe_zlib_decompress)
+        3    0.000    0.000    0.002    0.001 /Users/qz/miniconda3/lib/python3.10/re.py:249(compile)
+        8    0.002    0.000    0.002    0.000 {method 'decompress' of 'zlib.Decompress' objects}
+       16    0.001    0.000    0.001    0.000 {built-in method setPixmap}
+        4    0.000    0.000    0.001    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:944(parse)
+     16/4    0.000    0.000    0.001    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:436(_parse_sub)
+       22    0.001    0.000    0.001    0.000 {built-in method io.open_code}
+     19/4    0.000    0.000    0.001    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:494(_parse)
+       27    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:159(_path_isfile)
+       27    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:150(_path_is_mode_type)
+        1    0.000    0.000    0.001    0.001 /Users/qz/miniconda3/lib/python3.10/signal.py:1(<module>)
+       28    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:169(__enter__)
+        3    0.000    0.000    0.001    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:536(_convert_)
+       16    0.001    0.000    0.001    0.000 {built-in method io.open}
+       28    0.001    0.000    0.001    0.000 <frozen importlib._bootstrap>:179(_get_module_lock)
+       13    0.000    0.000    0.001    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:359(__call__)
+        6    0.000    0.000    0.001    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:180(__new__)
+        3    0.000    0.000    0.001    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:483(_create_)
+        2    0.001    0.000    0.001    0.000 {built-in method posix.listdir}
+        1    0.000    0.000    0.001    0.001 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:1(<module>)
+        1    0.000    0.000    0.001    0.001 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:1(<module>)
+       27    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:492(_init_module_attrs)
+        1    0.000    0.000    0.001    0.001 /Users/qz/miniconda3/lib/python3.10/selectors.py:1(<module>)
+       17    0.000    0.000    0.001    0.000 /Users/qz/miniconda3/lib/python3.10/abc.py:105(__new__)
+        4    0.000    0.000    0.001    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:622(_code)
+        2    0.001    0.000    0.001    0.000 {built-in method setColumnCount}
+       74    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x10cd4e920}
+       66    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:167(read)
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/collections/__init__.py:328(namedtuple)
+      549    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:255(get)
+       44    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:380(cache_from_source)
+      237    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:126(_path_join)
+     31/4    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:87(_compile)
+       16    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/posixpath.py:71(join)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1089(path_stats)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/numbers.py:1(<module>)
+       49    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:391(cached)
+       63    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:89(__setitem__)
+      611    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:234(__next)
+       27    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:510(_get_cached)
+        3    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/re.py:197(search)
+        2    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:412(<listcomp>)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.eval}
+     1423    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        9    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/_collections_abc.py:821(get)
+       10    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3904(__getitem__)
+       44    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:205(crc)
+      370    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+      368    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:966(load_end)
+       70    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/posixpath.py:117(splitext)
+      237    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:128(<listcomp>)
+        8    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:560(__getitem__)
+        2    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/SDCardQuickView.py:99(set_properties)
+       27    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1531(_get_spec)
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:222(<setcomp>)
+       90    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:552(_safe_read)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:561(__exit__)
+        9    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:243(DQT)
+        2    0.000    0.000    0.000    0.000 {built-in method setHorizontalHeaderLabels}
+       17    0.000    0.000    0.000    0.000 {built-in method _abc._abc_init}
+        2    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:800(load)
+       44    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:132(_path_split)
+      176    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/_binary.py:84(i32be)
+      321    0.000    0.000    0.000    0.000 {built-in method _struct.unpack_from}
+        8    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:574(__setitem__)
+        3    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:587(chunk_iTXt)
+       27    0.000    0.000    0.000    0.000 {method 'close' of '_io.BufferedReader' objects}
+  995/959    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+       22    0.000    0.000    0.000    0.000 {method '__exit__' of '_io._IOBase' objects}
+       27    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:721(spec_from_file_location)
+       88    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:154(_crc32)
+       68    0.000    0.000    0.000    0.000 {method 'tell' of '_io.BufferedReader' objects}
+       49    0.000    0.000    0.000    0.000 {built-in method builtins.max}
+        8    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:577(_setitem)
+       70    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/genericpath.py:121(_splitext)
+        8    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:492(chunk_cHRM)
+        5    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1182(exec_module)
+        2    0.000    0.000    0.000    0.000 {built-in method addWidget}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:1(<module>)
+        3    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:553(<listcomp>)
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:165(__prepare__)
+      222    0.000    0.000    0.000    0.000 {built-in method builtins.min}
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:585(_classify_pyc)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:394(_getdecoder)
+       80    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:1455(debug)
+       67    0.000    0.000    0.000    0.000 {method 'match' of 're.Pattern' objects}
+        5    0.000    0.000    0.000    0.000 {built-in method _imp.exec_dynamic}
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:173(__exit__)
+      606    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        4    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:560(_compile_info)
+       91    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:404(parent)
+      193    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:165(__getitem__)
+       81    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:470(__setattr__)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/BmpImagePlugin.py:55(_dib_accept)
+      274    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:244(_verbose_message)
+       16    0.000    0.000    0.000    0.000 {built-in method text}
+    35/11    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:175(getwidth)
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:125(release)
+       95    0.000    0.000    0.000    0.000 {built-in method builtins.setattr}
+       16    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:265(_compile_charset)
+       88    0.000    0.000    0.000    0.000 {built-in method zlib.crc32}
+       28    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/_distutils_hack/__init__.py:89(find_spec)
+      129    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/_binary.py:80(i16be)
+      285    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:423(chunk_IHDR)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:433(ImageFileDirectory_v2)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PpmImagePlugin.py:1(<module>)
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:100(acquire)
+    33/10    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/abc.py:121(__subclasscheck__)
+       15    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:579(_get_mixins_)
+       66    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:84(_unpack_uint32)
+    33/10    0.000    0.000    0.000    0.000 {built-in method _abc._abc_subclasscheck}
+        2    0.000    0.000    0.000    0.000 {built-in method clear}
+       16    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/posixpath.py:41(_get_sep)
+       16    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:292(_optimize_charset)
+       60    0.000    0.000    0.000    0.000 {built-in method addItem}
+        5    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:193(SOF)
+        2    0.000    0.000    0.000    0.000 {built-in method setRowCount}
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/_binary.py:60(i32le)
+       10    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/abc.py:117(__instancecheck__)
+       71    0.000    0.000    0.000    0.000 {method 'decode' of 'bytes' objects}
+       23    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:831(load)
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:71(__init__)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:618(_validate_timestamp_pyc)
+      199    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+        7    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:97(closegroup)
+       63    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:44(_is_private)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:517(chunk_pHYs)
+       10    0.000    0.000    0.000    0.000 {built-in method _abc._abc_instancecheck}
+      518    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+       43    0.000    0.000    0.000    0.000 {method 'seek' of '_io.BufferedReader' objects}
+      112    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:897(__exit__)
+       60    0.000    0.000    0.000    0.000 {built-in method setCheckState}
+       80    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:1724(isEnabledFor)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/numbers.py:294(Integral)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:511(__init__)
+       69    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/signal.py:9(<lambda>)
+       32    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/_util.py:5(is_path)
+      226    0.000    0.000    0.000    0.000 {method 'rpartition' of 'str' objects}
+       10    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:263(<listcomp>)
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:2071(getLogger)
+      188    0.000    0.000    0.000    0.000 {method 'rfind' of 'str' objects}
+       88    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:134(<genexpr>)
+        5    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/abc.py:110(register)
+       16    0.000    0.000    0.000    0.000 {built-in method width}
+       15    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:590(_find_data_type)
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:198(cb)
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:626(_find_new_)
+        5    0.000    0.000    0.000    0.000 {built-in method _abc._abc_register}
+      112    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:893(__enter__)
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:1315(getLogger)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:56(Skip)
+       72    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:498(<genexpr>)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:358(__init__)
+       63    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:22(_is_dunder)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/GimpGradientFile.py:1(<module>)
+      178    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+       41    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:524(__getattr__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/numbers.py:32(Complex)
+       63    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:33(_is_sunder)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3898(__len__)
+       11    0.000    0.000    0.000    0.000 {built-in method PIL._imaging.zip_decoder}
+       15    0.000    0.000    0.000    0.000 {method 'sort' of 'list' objects}
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3650(__init__)
+       45    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:12(_is_descriptor)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/GimpPaletteFile.py:1(<module>)
+        9    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:689(_register_basic)
+       47    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:67(_relax_case)
+      157    0.000    0.000    0.000    0.000 {built-in method posix.fspath}
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:229(<listcomp>)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:443(chunk_IDAT)
+      114    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:260(<genexpr>)
+        3    0.000    0.000    0.000    0.000 {method 'search' of 're.Pattern' objects}
+       60    0.000    0.000    0.000    0.000 {built-in method flags}
+       69    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:250(match)
+      168    0.000    0.000    0.000    0.000 {built-in method _imp.release_lock}
+       22    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:665(_unpack)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:542(_check_name_wrapper)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/GifImagePlugin.py:39(LoadingStrategy)
+       28    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+       18    0.000    0.000    0.000    0.000 {built-in method setItem}
+       60    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:173(append)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:99(Disposal)
+       69    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:161(__len__)
+      168    0.000    0.000    0.000    0.000 {built-in method _imp.acquire_lock}
+       59    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1356(_path_importer_cache)
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:357(__init__)
+       56    0.000    0.000    0.000    0.000 {built-in method _thread.allocate_lock}
+        2    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:494(__init__)
+        3    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:258(__new__)
+       48    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:749(load_rational)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageColor.py:1(<module>)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffTags.py:36(lookup)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:120(Blend)
+       27    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:180(_path_isabs)
+      125    0.000    0.000    0.000    0.000 {method 'upper' of 'str' objects}
+        4    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:986(__and__)
+        2    0.000    0.000    0.000    0.000 {built-in method setCentralWidget}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:364(__repr__)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3162(_decompression_bomb_check)
+       44    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:287(tell)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/fractions.py:38(Fraction)
+       13    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:447(_simple)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/BmpImagePlugin.py:51(_accept)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PaletteFile.py:1(<module>)
+       30    0.000    0.000    0.000    0.000 {built-in method _struct.unpack}
+       60    0.000    0.000    0.000    0.000 {built-in method setFlags}
+        5    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:482(_getmp)
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:826(find_spec)
+        5    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:268(getuntil)
+        7    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:85(opengroup)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:48(_new_module)
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:746(find_spec)
+        8    0.000    0.000    0.000    0.000 {built-in method zlib.decompressobj}
+        7    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3407(register_open)
+        5    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:672(decorator)
+        2    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:756(<genexpr>)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageSequence.py:1(<module>)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3910(__contains__)
+       16    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:356(_escape)
+       11    0.000    0.000    0.000    0.000 {method 'setimage' of 'ImagingDecoder' objects}
+        2    0.000    0.000    0.000    0.000 {built-in method setLayout}
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:165(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:753(combine)
+       15    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3457(register_extension)
+        4    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3468(register_extensions)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:303(IFDRational)
+        6    0.000    0.000    0.000    0.000 {method 'split' of 'bytes' objects}
+       35    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:112(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageOps.py:1(<module>)
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:569(_check_for_existing_members)
+       64    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:538(size)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:317(__init__)
+        2    0.000    0.000    0.000    0.000 {built-in method setWindowTitle}
+       63    0.000    0.000    0.000    0.000 {method 'pop' of 'dict' objects}
+      4/3    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:485(_get_literal_prefix)
+       66    0.000    0.000    0.000    0.000 {built-in method from_bytes}
+        4    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:225(__init__)
+       56    0.000    0.000    0.000    0.000 {method '__exit__' of '_thread.lock' objects}
+       12    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:790(_ensure_read)
+        8    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:657(__delitem__)
+       22    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:702(_accept)
+        5    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:507(_getmp)
+        8    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3657(_fixup)
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:1366(_fixupParents)
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:1435(__init__)
+        4    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:219(_acquireLock)
+       22    0.000    0.000    0.000    0.000 {built-in method _imp._fix_co_filename}
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:82(__init__)
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/GifImagePlugin.py:54(_accept)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1040(__init__)
+       56    0.000    0.000    0.000    0.000 {built-in method _thread.get_ident}
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:622(<genexpr>)
+       85    0.000    0.000    0.000    0.000 {method 'lower' of 'str' objects}
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:423(__getattr__)
+       81    0.000    0.000    0.000    0.000 {method 'get' of 'mappingproxy' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/subprocess.py:702(Popen)
+       54    0.000    0.000    0.000    0.000 {built-in method builtins.issubclass}
+       12    0.000    0.000    0.000    0.000 {built-in method builtins.locals}
+        3    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:697(<lambda>)
+        3    0.000    0.000    0.000    0.000 {method 'update' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageChops.py:1(<module>)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegPresets.py:1(<module>)
+        8    0.000    0.000    0.000    0.000 {method 'find' of 'bytes' objects}
+       46    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/abc.py:7(abstractmethod)
+       22    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:82(groups)
+       21    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:337(_accept)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/selectors.py:584(_can_use)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:163(__init__)
+       12    0.000    0.000    0.000    0.000 {method 'pixel_access' of 'ImagingCore' objects}
+       70    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/signal.py:16(<lambda>)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:980(__or__)
+        3    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:734(load_string)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/numbers.py:147(Real)
+       12    0.000    0.000    0.000    0.000 {built-in method _imp.is_builtin}
+       71    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/signal.py:21(<lambda>)
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:198(<dictcomp>)
+        6    0.000    0.000    0.000    0.000 {built-in method builtins.any}
+        3    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:433(_uniq)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PpmImagePlugin.py:45(_accept)
+       28    0.000    0.000    0.000    0.000 {built-in method _imp.is_frozen}
+        7    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/fractions.py:276(_operator_fallbacks)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/BmpImagePlugin.py:62(BmpImageFile)
+       26    0.000    0.000    0.000    0.000 {method 'find' of 'bytearray' objects}
+       14    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:169(__setitem__)
+       55    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+       10    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:678(__new__)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/_util.py:15(__init__)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:193(close)
+       69    0.000    0.000    0.000    0.000 {method 'isupper' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImagePalette.py:196(raw)
+        9    0.000    0.000    0.000    0.000 {built-in method _struct.calcsize}
+        4    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:535(reset)
+        2    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffTags.py:26(__new__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImagePalette.py:25(ImagePalette)
+        3    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:662(__iter__)
+       18    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:245(<genexpr>)
+       37    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:559(<lambda>)
+        3    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:1880(AppendingTiffWriter)
+        4    0.000    0.000    0.000    0.000 {built-in method _sre.compile}
+        2    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3924(__iter__)
+       18    0.000    0.000    0.000    0.000 {method 'read' of '_io.BytesIO' objects}
+        8    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:619(isstring)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:466(chunk_tRNS)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:965(ImageFileDirectory_v1)
+        1    0.000    0.000    0.000    0.000 {method 'putpalette' of 'ImagingCore' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/subprocess.py:425(CompletedProcess)
+        7    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3434(register_save)
+        8    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:81(_combine_flags)
+        4    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:228(_releaseLock)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:357(PngStream)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:456(_generate_overlap_table)
+       27    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:412(has_location)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:710(PngImageFile)
+       24    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:528(<lambda>)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:1064(TiffImageFile)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/numbers.py:283(__float__)
+        4    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:76(__init__)
+       30    0.000    0.000    0.000    0.000 {method 'items' of 'mappingproxy' objects}
+       26    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:388(_delegate)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:232(<lambda>)
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:786(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/selectors.py:81(BaseSelector)
+       32    0.000    0.000    0.000    0.000 {built-in method builtins.ord}
+        8    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffTags.py:29(cvt_enum)
+        7    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3423(register_mime)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:75(_tilesort)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1065(get_filename)
+       11    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:571(__contains__)
+        2    0.000    0.000    0.000    0.000 {built-in method setGeometry}
+        4    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_parse.py:928(fix_flags)
+        8    0.000    0.000    0.000    0.000 {built-in method builtins.repr}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImagePalette.py:37(__init__)
+        1    0.000    0.000    0.000    0.000 {method 'getpalette' of 'ImagingCore' objects}
+       20    0.000    0.000    0.000    0.000 {method 'replace' of 'str' objects}
+        9    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/collections/__init__.py:402(<genexpr>)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/JpegImagePlugin.py:346(JpegImageFile)
+       11    0.000    0.000    0.000    0.000 {method 'cleanup' of 'ImagingDecoder' objects}
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:874(create_module)
+        3    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:375(check_text_memory)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageSequence.py:19(Iterator)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/fractions.py:62(__new__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/selectors.py:61(_SelectorMapping)
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/signal.py:49(decorator)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/GifImagePlugin.py:63(GifImageFile)
+       22    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/selectors.py:342(_PollLikeSelector)
+       14    0.000    0.000    0.000    0.000 {method 'isidentifier' of 'str' objects}
+        9    0.000    0.000    0.000    0.000 {built-in method sys.intern}
+       16    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:558(__enter__)
+        4    0.000    0.000    0.000    0.000 {method 'acquire' of '_thread.RLock' objects}
+        5    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1163(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:459(chunk_PLTE)
+        2    0.000    0.000    0.000    0.000 <string>:1(<lambda>)
+        4    0.000    0.000    0.000    0.000 {built-in method builtins.divmod}
+        1    0.000    0.000    0.000    0.000 {method 'close' of 'select.kqueue' objects}
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:516(_get_charset_prefix)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/subprocess.py:104(CalledProcessError)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:251(iTXt)
+        3    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3445(register_save_all)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:85(ImageFile)
+        7    0.000    0.000    0.000    0.000 {method 'setdefault' of 'dict' objects}
+       12    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/_distutils_hack/__init__.py:96(<lambda>)
+        2    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:272(_accept)
+        6    0.000    0.000    0.000    0.000 {method 'setter' of 'property' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/types.py:176(__get__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:138(<dictcomp>)
+        3    0.000    0.000    0.000    0.000 {built-in method fromkeys}
+        9    0.000    0.000    0.000    0.000 {built-in method builtins.vars}
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:1710(getEffectiveLevel)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/numbers.py:267(Rational)
+       15    0.000    0.000    0.000    0.000 {method 'pop' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:162(ChunkStream)
+        6    0.000    0.000    0.000    0.000 {method 'mro' of 'type' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:618(<listcomp>)
+        9    0.000    0.000    0.000    0.000 {method '__contains__' of 'frozenset' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:670(PyDecoder)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/selectors.py:291(SelectSelector)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/subprocess.py:141(TimeoutExpired)
+        3    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:451(__members__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/selectors.py:207(_BaseSelectorImpl)
+        6    0.000    0.000    0.000    0.000 {method 'clear' of 'dict' objects}
+        8    0.000    0.000    0.000    0.000 {built-in method _sre.unicode_iscased}
+       10    0.000    0.000    0.000    0.000 {method 'seek' of '_io.BytesIO' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:358(Parser)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/subprocess.py:648(_use_posix_spawn)
+        2    0.000    0.000    0.000    0.000 {method 'startswith' of 'bytes' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/selectors.py:434(PollSelector)
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/sre_compile.py:477(_get_iscased)
+        3    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImagePalette.py:52(palette)
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:193(_checkLevel)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImagePalette.py:84(getdata)
+        3    0.000    0.000    0.000    0.000 {method 'endswith' of 'bytes' objects}
+        3    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3489(register_decoder)
+        6    0.000    0.000    0.000    0.000 {method 'tell' of '_io.BytesIO' objects}
+        5    0.000    0.000    0.000    0.000 {built-in method builtins.iter}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:719(PyEncoder)
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:1261(append)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PaletteFile.py:19(PaletteFile)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/selectors.py:507(KqueueSelector)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/GimpPaletteFile.py:22(GimpPaletteFile)
+        5    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:682(_register_writer)
+        6    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/signal.py:48(_wraps)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PpmImagePlugin.py:148(PpmPlainDecoder)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/Image.py:3913(__setitem__)
+        5    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:671(_register_loader)
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:273(PngInfo)
+        5    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:683(decorator)
+        4    0.000    0.000    0.000    0.000 {method 'release' of '_thread.RLock' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PpmImagePlugin.py:53(PpmImageFile)
+        5    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:328(StubImageFile)
+        5    0.000    0.000    0.000    0.000 {built-in method _sre.unicode_tolower}
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/_collections_abc.py:315(__subclasshook__)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:598(PyCodec)
+        2    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/logging/__init__.py:1307(disable)
+        1    0.000    0.000    0.000    0.000 {method 'split' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/numbers.py:12(Number)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/GimpGradientFile.py:66(GradientFile)
+        2    0.000    0.000    0.000    0.000 {built-in method sys._getframe}
+        1    0.000    0.000    0.000    0.000 {method 'join' of 'bytes' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:1077(_idat)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/enum.py:801(value)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImageFile.py:587(PyCodecState)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/BmpImagePlugin.py:287(BmpRleDecoder)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/fractions.py:256(numerator)
+        1    0.000    0.000    0.000    0.000 {built-in method height}
+        1    0.000    0.000    0.000    0.000 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/GimpGradientFile.py:101(GimpGradientFile)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PpmImagePlugin.py:279(PpmDecoder)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/PngImagePlugin.py:1088(_fdat)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/BmpImagePlugin.py:361(DibImageFile)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/subprocess.py:101(SubprocessError)
+        1    0.000    0.000    0.000    0.000 {method 'islower' of 'bytes' objects}
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/ImagePalette.py:48(palette)
+        1    0.000    0.000    0.000    0.000 /Users/qz/Downloads/SDCardQuickView/venv/lib/python3.10/site-packages/PIL/TiffImagePlugin.py:722(load_byte)
+        1    0.000    0.000    0.000    0.000 /Users/qz/miniconda3/lib/python3.10/fractions.py:260(denominator)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.globals}
 
 
