@@ -1,4 +1,5 @@
 # SDCardQuickView
+![Alt text](https://github.com/Johnnydaszhu/SDCardQuickView/raw/master/QuickView_v1.jpg)
 
 📸 Overview
 
