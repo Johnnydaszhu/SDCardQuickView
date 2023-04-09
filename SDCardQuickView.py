@@ -66,14 +66,14 @@ class App(QMainWindow):
         buttons_widget.setLayout(buttons_layout)
         layout.addWidget(buttons_widget)
 
-        open_button = QPushButton("Open Folder")
+        open_button = QPushButton("打开文件夹")
         buttons_layout.addWidget(open_button)
         open_button.clicked.connect(self.on_open_folder_clicked)
 
         filter_date_layout = QGridLayout()
         buttons_layout.addLayout(filter_date_layout)
 
-        filter_date_layout.addWidget(QLabel("Start Date:"), 0, 0)
+        filter_date_layout.addWidget(QLabel("开始日期:"), 0, 0)
         self.start_date_edit = QDateEdit()
         filter_date_layout.addWidget(self.start_date_edit, 0, 1)
         self.start_date_edit.setCalendarPopup(True)
@@ -83,7 +83,7 @@ class App(QMainWindow):
         self.start_date_edit.setDate(QDate.currentDate().addMonths(-1))
         self.start_date_edit.setDisplayFormat("yyyy-MM-dd")
 
-        filter_date_layout.addWidget(QLabel("End Date:"), 1, 0)
+        filter_date_layout.addWidget(QLabel("结束日期:"), 1, 0)
         self.end_date_edit = QDateEdit()
         filter_date_layout.addWidget(self.end_date_edit, 1, 1)
         self.end_date_edit.setCalendarPopup(True)
@@ -146,7 +146,7 @@ class App(QMainWindow):
         item.setSelected(item.checkState() == Qt.Checked)
     
     def on_open_folder_clicked(self):
-        folder = QFileDialog.getExistingDirectory(self, "Select a folder", self.root_folder)
+        folder = QFileDialog.getExistingDirectory(self, "选择一个文件夹", self.root_folder)
         if folder:
             self.current_folder = folder
             self.images = self.create_image_list()
@@ -178,10 +178,10 @@ class App(QMainWindow):
         selected_items = [self.image_list.item(i) for i in range(self.image_list.count()) if self.image_list.item(i).isSelected()]
 
         if not selected_items:
-            QMessageBox.information(self, "No images selected", "Please select images to delete.")
+            QMessageBox.information(self, "没有选择图片", "请选择图片进行删除.")
             return
 
-        reply = QMessageBox.question(self, "Delete Images", "Are you sure you want to delete the selected images?",
+        reply = QMessageBox.question(self, "删除图片", "你确定要删除选中的图片吗?",
                                       QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
