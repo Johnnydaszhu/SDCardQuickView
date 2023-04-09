@@ -3,14 +3,6 @@
 
 SDCardQuickView是一个用于查看SD卡中照片信息的Python脚本，它依赖于PyQt5和Pillow库。您可以按照以下步骤使用它：
 
-建议使用虚拟环境，教程如下：
-1. 在你的电脑上安装Python 3.6或更高版本。
-2. 下载`SDCardQuickView`代码并解压缩。
-3. 打开终端并进入`SDCardQuickView`文件夹。
-4. 创建一个虚拟环境（可选）： `python3 -m venv venv`
-5. 激活虚拟环境： `source venv/bin/activate`
-6. 安装依赖项： `pip install -r requirements.txt`
-
 
 📸 Overview
 
@@ -34,3 +26,12 @@ SDCardQuickView是一个用于查看SD卡中照片信息的Python脚本，它依
 使用鼠标或键盘Shift/Ctrl (Cmd on macOS)键选择多个图片。
 点击“Delete Selected Images”按钮删除所选图片。
 
+
+建议使用虚拟环境，教程如下：
+
+1. 在你的电脑上安装Python 3.6或更高版本。
+2. 下载`SDCardQuickView`代码并解压缩。
+3. 打开终端并进入`SDCardQuickView`文件夹。
+4. 创建一个虚拟环境（可选）： `python3 -m venv venv`
+5. 激活虚拟环境： `source venv/bin/activate`
+6. 安装依赖项： `pip install -r requirements.txt`
