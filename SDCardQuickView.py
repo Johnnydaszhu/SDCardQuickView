@@ -97,6 +97,22 @@ class App(QMainWindow):
         buttons_layout.addWidget(filter_date_button)
         filter_date_button.clicked.connect(self.apply_date_filter)
 
+        today_button = QPushButton("今天")
+        today_button.clicked.connect(self.select_today)
+        buttons_layout.addWidget(today_button)
+
+        this_week_button = QPushButton("本周")
+        this_week_button.clicked.connect(self.select_this_week)
+        buttons_layout.addWidget(this_week_button)
+
+        this_month_button = QPushButton("本月")
+        this_month_button.clicked.connect(self.select_this_month)
+        buttons_layout.addWidget(this_month_button)
+        
+        cancel_date_filter_button = QPushButton("取消日期筛选")
+        buttons_layout.addWidget(cancel_date_filter_button)
+        cancel_date_filter_button.clicked.connect(self.cancel_date_filter)
+        
         delete_button = QPushButton("删除选中照片")
         buttons_layout.addWidget(delete_button)
         delete_button.clicked.connect(self.delete_images)
@@ -127,7 +143,6 @@ class App(QMainWindow):
                     image_list.append(os.path.join(root, file))
         return image_list
 
-
     def load_images(self):
         self.image_list.clear()
         for image_path in self.images:
@@ -144,7 +159,7 @@ class App(QMainWindow):
 
     def on_item_changed(self, item):
         item.setSelected(item.checkState() == Qt.Checked)
-    
+
     def on_open_folder_clicked(self):
         folder = QFileDialog.getExistingDirectory(self, "选择一个文件夹", self.root_folder)
         if folder:
@@ -158,9 +173,33 @@ class App(QMainWindow):
         self.images = [image for image in self.create_image_list() if self.is_image_within_date_range(image, start_date, end_date)]
         self.load_images()
 
+    def select_today(self):
+        today = datetime.date.today()
+        self.start_date_edit.setDate(today)
+        self.end_date_edit.setDate(today)
+        self.apply_date_filter()
+
+    def select_this_week(self):
+        today = datetime.date.today()
+        start_of_week = today - datetime.timedelta(days=today.weekday())
+        self.start_date_edit.setDate(start_of_week)
+        self.end_date_edit.setDate(today)
+        self.apply_date_filter()
+
+    def select_this_month(self):
+        today = datetime.date.today()
+        start_of_month = today.replace(day=1)
+        self.start_date_edit.setDate(start_of_month)
+        self.end_date_edit.setDate(today)
+        self.apply_date_filter()
+        
+    def cancel_date_filter(self):
+        self.images = self.create_image_list()
+        self.load_images()
+
     def is_image_within_date_range(self, image_path, start_date, end_date):
-        image_date = self.get_image_date(image_path)
-        return start_date <= image_date <= end_date
+            image_date = self.get_image_date(image_path)
+            return start_date <= image_date <= end_date
 
     def get_image_date(self, image_path):
         try:
@@ -182,7 +221,7 @@ class App(QMainWindow):
             return
 
         reply = QMessageBox.question(self, "删除图片", "你确定要删除选中的图片吗?",
-                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
             for item in selected_items:
@@ -210,4 +249,3 @@ if __name__ == "__main__":
     window = App()
     window.show()
     sys.exit(app.exec_())
-
