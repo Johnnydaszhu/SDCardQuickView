@@ -1,41 +1,21 @@
 import sys
-import io
 import os
 import datetime
-import cProfile
-import pstats
-from functools import lru_cache
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QSplitter,
-    QLabel,
-    QSizePolicy,
-    QListWidget,
-    QPushButton,
-    QGridLayout,
-    QComboBox,
-    QDateEdit,
-    QFileSystemModel,
-    QTreeView,
-    QListWidgetItem,
-    QCheckBox,
-    QFileDialog,
-    QMessageBox,
-    QTableWidget,
-    QTableWidgetItem,
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QListWidget,
+    QPushButton, QGridLayout, QDateEdit, QFileDialog, QMessageBox, QListWidgetItem,
+    QLabel, QGestureEvent, QPinchGesture
 )
-from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QModelIndex, QDate
-from PyQt5.QtGui import QPixmap, QIcon, QImage, QColor
-from PIL.ImageQt import ImageQt
-
-import concurrent.futures
+from PyQt5.QtCore import Qt, QSize, QDate, QPointF, QEvent, QByteArray, QBuffer
+from PyQt5.QtGui import QPixmap, QIcon, QImageReader, QImage
+from PyQt5.QtWidgets import QApplication, QGraphicsView
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor, QPainter, QPicture
 from PIL import Image
 from PIL.ExifTags import TAGS
+import hashlib
+from diskcache import Cache
+from PIL.ImageQt import ImageQt
 
 
 class App(QMainWindow):
@@ -59,6 +39,13 @@ class App(QMainWindow):
         self.image_list.setIconSize(QSize(100, 100))
         self.image_list.setResizeMode(QListWidget.Adjust)
         self.image_list.setSelectionMode(QListWidget.ExtendedSelection)
+        self.thumbnail_size = QSize(100, 100)
+        self.image_list.setIconSize(self.thumbnail_size)
+        self.image_list.viewport().grabGesture(Qt.PinchGesture)
+        
+        # 创建缓存
+        self.cache = Cache(os.path.join(self.root_folder, ".thumbnails"))
+        
         layout.addWidget(self.image_list)
 
         buttons_widget = QWidget()
@@ -72,6 +59,7 @@ class App(QMainWindow):
 
         filter_date_layout = QGridLayout()
         buttons_layout.addLayout(filter_date_layout)
+        
 
         filter_date_layout.addWidget(QLabel("开始日期:"), 0, 0)
         self.start_date_edit = QDateEdit()
@@ -141,6 +129,18 @@ class App(QMainWindow):
 
         self.load_images()
         
+        clear_cache_button = QPushButton("清理缩略图缓存")
+        buttons_layout.addWidget(clear_cache_button)
+        clear_cache_button.clicked.connect(self.clear_thumbnail_cache)
+        
+        zoom_in_button = QPushButton("+")
+        buttons_layout.addWidget(zoom_in_button)
+        zoom_in_button.clicked.connect(self.zoom_in)
+
+        zoom_out_button = QPushButton("-")
+        buttons_layout.addWidget(zoom_out_button)
+        zoom_out_button.clicked.connect(self.zoom_out)
+        
     def on_selection_changed(self):
         for index in range(self.image_list.count()):
             item = self.image_list.item(index)
@@ -165,9 +165,20 @@ class App(QMainWindow):
     def load_images(self):
         self.image_list.clear()
         for image_path in self.images:
-            pixmap = QPixmap()
-            pixmap.load(image_path)
-            icon = QIcon(pixmap.scaled(100, 100, Qt.KeepAspectRatio))
+            thumbnail_data = self.cache.get(image_path)
+
+            if thumbnail_data is not None:
+                thumbnail = QPixmap()
+                thumbnail.loadFromData(QByteArray(thumbnail_data))
+            else:
+                thumbnail = self.generate_thumbnail(image_path)
+                buffer = QBuffer()
+                buffer.open(QBuffer.ReadWrite)
+                thumbnail.save(buffer, "PNG")
+                thumbnail_data = buffer.data()
+                self.cache.set(image_path, thumbnail_data)
+
+            icon = QIcon(thumbnail)
             item = QListWidgetItem(os.path.basename(image_path))
             item.setIcon(icon)
             item.setCheckState(Qt.Unchecked)
@@ -175,6 +186,36 @@ class App(QMainWindow):
             self.image_list.addItem(item)
 
         self.image_list.itemChanged.connect(self.on_item_changed)
+
+
+    def generate_thumbnail(self, image_path):
+        # Open the image using PIL.Image
+        image = Image.open(image_path)
+        # Resize the image and keep the aspect ratio
+        image.thumbnail((self.thumbnail_size.width(), self.thumbnail_size.height()), Image.ANTIALIAS)
+        # Convert the PIL.Image to QImage using ImageQt
+        if image.mode != 'RGBA':
+            image = image.convert('RGBA')
+        qimage = ImageQt(image)
+        # Convert QImage to QPixmap
+        pixmap = QPixmap.fromImage(qimage)
+        # Return the QPixmap
+        return pixmap
+
+    def clear_thumbnail_cache(self):
+        self.cache.clear()
+        QMessageBox.information(self, "清理完成", "缩略图缓存已清理。")
+
+    def zoom_in(self):
+        self.set_thumbnail_size(self.thumbnail_size.width() * 1.2)
+
+    def zoom_out(self):
+        self.set_thumbnail_size(self.thumbnail_size.width() * 0.8)
+
+    def set_thumbnail_size(self, size):
+        self.thumbnail_size = QSize(size, size)
+        self.image_list.setIconSize(self.thumbnail_size)
+        self.load_images()
 
     def on_item_changed(self, item):
         item.setSelected(item.checkState() == Qt.Checked)
@@ -262,6 +303,33 @@ class App(QMainWindow):
             item = self.image_list.item(index)
             item.setSelected(False)
 
+    def event(self, event):
+        if event.type() == QEvent.Gesture:
+            return self.gesture_event(event)
+        return super(App, self).event(event)
+
+    def gesture_event(self, event):
+        pinch = event.gesture(Qt.PinchGesture)
+        if pinch:
+            self.pinch_triggered(pinch)
+        return True
+
+    def pinch_triggered(self, gesture):
+        changeFlags = gesture.changeFlags()
+        if changeFlags & QPinchGesture.ScaleFactorChanged:
+            new_size = self.thumbnail_size.width() * gesture.scaleFactor()
+            self.set_thumbnail_size(new_size)
+
+    def zoom_in(self):
+        self.set_thumbnail_size(self.thumbnail_size.width() * 1.2)
+
+    def zoom_out(self):
+        self.set_thumbnail_size(self.thumbnail_size.width() * 0.8)
+
+    def set_thumbnail_size(self, size):
+        self.thumbnail_size = QSize(int(size), int(size))
+        self.image_list.setIconSize(self.thumbnail_size)
+        self.load_images()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
