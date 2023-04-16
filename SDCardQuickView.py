@@ -113,6 +113,16 @@ class App(QMainWindow):
         buttons_layout.addWidget(cancel_date_filter_button)
         cancel_date_filter_button.clicked.connect(self.cancel_date_filter)
         
+        self.image_list.itemSelectionChanged.connect(self.on_selection_changed)
+
+        ascending_button = QPushButton("升序")
+        buttons_layout.addWidget(ascending_button)
+        ascending_button.clicked.connect(lambda: self.sort_images(ascending=True))
+
+        descending_button = QPushButton("降序")
+        buttons_layout.addWidget(descending_button)
+        descending_button.clicked.connect(lambda: self.sort_images(ascending=False))
+        
         delete_button = QPushButton("删除选中照片")
         buttons_layout.addWidget(delete_button)
         delete_button.clicked.connect(self.delete_images)
@@ -130,6 +140,15 @@ class App(QMainWindow):
         self.statusBar()
 
         self.load_images()
+        
+    def on_selection_changed(self):
+        for index in range(self.image_list.count()):
+            item = self.image_list.item(index)
+            item.setCheckState(Qt.Checked if item.isSelected() else Qt.Unchecked)
+
+    def sort_images(self, ascending=True):
+        self.image_list.setSortingEnabled(True)
+        self.image_list.sortItems(Qt.AscendingOrder if ascending else Qt.DescendingOrder)
 
     def create_image_list(self):
         image_list = []
