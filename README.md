@@ -1,5 +1,5 @@
 # SDCardQuickView
-![Alt text](https://github.com/Johnnydaszhu/SDCardQuickView/raw/master/QuickView_v1.jpg)
+![Alt text](https://github.com/Johnnydaszhu/SDCardQuickView/raw/master/QuickView_v2.png)
 
 SDCardQuickView是一个用于查看SD卡中照片信息的Python脚本，它依赖于PyQt5和Pillow库。您可以按照以下步骤使用它：
 
