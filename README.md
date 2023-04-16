@@ -29,6 +29,10 @@ SDCardQuickView是一个用于查看SD卡中照片信息的Python脚本，它依
 
 建议使用虚拟环境，教程如下：
 
+方法一（MacOS）：
+打开dist文件夹，双击SDCardQuickView.app打开
+
+方法二：
 1. 在你的电脑上安装Python 3.6或更高版本。
 2. 下载`SDCardQuickView`代码并解压缩。
 3. 打开终端并进入`SDCardQuickView`文件夹。
